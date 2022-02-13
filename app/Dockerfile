@@ -1,10 +1,8 @@
 FROM python:3.7
 
-# layer caching for faster builds
 COPY requirements.txt /
 RUN pip3 install  --verbose  -r /requirements.txt
 
-#COPY app.py /app.py
 ADD . /app
 WORKDIR /app
 

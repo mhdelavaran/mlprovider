@@ -1,12 +1,11 @@
+import json
+import pymongo
+import pandas as pd 
 from flask import Flask, flash, request, redirect, jsonify
+from flask_swagger_ui import get_swaggerui_blueprint
 from werkzeug.utils import secure_filename
 from celery import Celery
-import pymongo
 from bson.objectid import ObjectId
-import pandas as pd 
-import json
-import pickle as pkl
-from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 
@@ -28,9 +27,12 @@ celery_cluster = Celery('tasks',
 d = {'CELERY_ACCEPT_CONTENT' : ['pickle'],
 'CELERY_TASK_SERIALIZER' : 'pickle',
 'CELERY_RESULT_SERIALIZER' : 'pickle'}
+
 celery_cluster.conf.update(d)
+
 url = 'mongodb://mongodb:27017/?authSource=admin'
 mongo_client = pymongo.MongoClient(url)
+
 ROOT = '/api/v1/'
 ALLWOED_DATASET_FORMAT = 'csv'
 

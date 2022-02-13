@@ -27,6 +27,7 @@ d = {'CELERY_ACCEPT_CONTENT' : ['pickle'],
 'CELERY_TASK_SERIALIZER' : 'pickle',
 'CELERY_RESULT_SERIALIZER' : 'pickle'}
 app.conf.update(d)
+
 @app.task()
 def train_model(model_type: str, dataset_id: str):
     logger.info('Geting dataset')
@@ -51,6 +52,4 @@ def train_model(model_type: str, dataset_id: str):
     clf = clfs[model_type]()
     clf.fit(train_x,train_y)
     logger.info('train Finished ')
-    picked_data = pkl.dumps(clf)
-    logger.info('model converted to pickel ')
     return clf

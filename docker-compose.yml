@@ -8,7 +8,7 @@ services:
     depends_on:
       - rabbit
     networks:
-       - my-net
+       - mlprovider
 
   rabbit:
     container_name: rabbitmq_host
@@ -21,7 +21,7 @@ services:
       - "15672:15672"
       - "5672:5672"
     networks:
-       - my-net
+       - mlprovider
 
   mongodb_container:
     container_name: mongodb
@@ -31,7 +31,7 @@ services:
     volumes:
       - mongodb_data_container:/data/db
     networks:
-       - my-net
+       - mlprovider
       
   worker:
     build: './worker'
@@ -40,10 +40,10 @@ services:
       - rabbit
       - app
     networks:
-       - my-net
+       - mlprovider
 networks:
   my-net:
-     name: my-net
+     name: mlprovider
 
 volumes:
   mongodb_data_container: 
