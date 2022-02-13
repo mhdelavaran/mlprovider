@@ -42,7 +42,7 @@ services:
     networks:
        - mlprovider
 networks:
-  my-net:
+  mlprovider:
      name: mlprovider
 
 volumes:
