@@ -6,7 +6,7 @@ there are many problems with this code but its a toy problem.
 in project directory hit 
 
 ```
-sudo dokcer-compose up -d
+sudo dokcer-compose up --build -d
 ```
 
 open http://localhost:5000/swagger in browser
