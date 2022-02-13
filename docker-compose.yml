@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+
+  app:
+    build: './app'
+    ports:
+      - "5000:5000"
+    depends_on:
+      - rabbit
+    networks:
+       - my-net
+
+  rabbit:
+    container_name: rabbitmq_host
+    hostname: rabbit
+    image: "rabbitmq:3-management"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+       - my-net
+
+  mongodb_container:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+       - my-net
+      
+  worker:
+    build: './worker'
+    user: nobody
+    depends_on:
+      - rabbit
+      - app
+    networks:
+       - my-net
+networks:
+  my-net:
+     name: my-net
+
+volumes:
+  mongodb_data_container: 

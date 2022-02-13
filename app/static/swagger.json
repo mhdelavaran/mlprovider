@@ -1,0 +1,174 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "sean",
+    "version": "1.0.0",
+    "title": "ML Provider",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "ML Provider",
+      "description": "service to provide classification."
+    }
+  ],
+  "paths": {
+    "/dataset": {
+      "post": {
+        "tags": [
+          "dataset"
+        ],
+        "summary": "for uploading datasets.",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label_column": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/model": {
+      "summary": "end point to train an ML model given a dataset",
+      "get": {
+        "tags": [
+          "model"
+        ],
+        "summary": "get the list available model types ",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "ok. list of model types"
+          },
+          "500": {
+            "description": "not OK"
+          }
+        }
+      },
+      "post": {
+        "summary": "post a train request ",
+        "description": "",
+        "operationId": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model_type": {
+                    "type": "string"
+                  },
+                  "dataset_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "model id will be returned."
+          }
+        },
+        "tags": [
+          "model"
+        ]
+      }
+    },
+    "/model/{model_id}": {
+      "summary": "check the status of training job",
+      "get": {
+        "summary": "will return the status of a training job",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "model id to check."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the status."
+          }
+        },
+        "tags": [
+          "model"
+        ]
+      }
+    },
+    "/prediction": {
+      "post": {
+        "summary": "get prediction for a trained model given an input",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model_id": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "integer"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "prediction"
+        ]
+      }
+    }
+  }
+}

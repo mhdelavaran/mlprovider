@@ -1,0 +1,8 @@
+flask
+celery[mongodb]
+flask_swagger_ui
+pymongo
+werkzeug
+scikit-learn
+pandas
+numpy

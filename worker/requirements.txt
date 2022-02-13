@@ -1,0 +1,4 @@
+celery[mongodb]
+pandas
+pymongo
+scikit-learn
